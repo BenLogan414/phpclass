@@ -37,13 +37,23 @@ ul{
     padding: 0;
     width: 200px;
     background-color: #f1f1f1f1;
+    border: 1px solid;
 }
 
 ul a{
     display: block;
     color: black;
-    padding: 8px 0 8px 16px;
+    padding: 8px 0 8px 0;
     text-decoration: none;
+}
+
+li{
+    text-align: center;
+    border-bottom: 1px solid;
+}
+
+li:last-child{
+    border-bottom: none;
 }
 
 li a:hover{
@@ -51,7 +61,7 @@ li a:hover{
     color: #f1f1f1;
 }
 
-footer{
+footer {
     width: 100%;
     float: left;
     font-size: small;
