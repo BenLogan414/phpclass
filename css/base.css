@@ -16,6 +16,8 @@ main{
     width: 60%;
     float: left;
     font-size: large;
+    text-align: center;
+    min-height: 400px;
 }
 
 footer{

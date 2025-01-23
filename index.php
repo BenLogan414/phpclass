@@ -23,7 +23,9 @@
     </nav>
 
     <main>
-        <p>Stuff goes here</p>
+        <img src="images/ProfilePicture.jpg" alt="ProfilePicture">
+        <p>My name is Benjamin Logan, and this is my third semester in the Software Developer program. I currently work
+            at Contract Converting as a Machine Helper. My hobbies include bowling, golfing, football and basketball.</p>
     </main>
 
     <footer>
