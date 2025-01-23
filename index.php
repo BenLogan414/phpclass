@@ -6,14 +6,28 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Benjamin's Webpage</title>
+    <link rel="stylesheet" type="text/css" href="css/base.css">
 </head>
 <body>
-    <header><h1>PHP Class - Benjamin's Website</h1></header>
+    <header>
+        <h1>PHP Class - Benjamin's Website</h1>
+    </header>
 
     <nav>
         <ul>
-            <li></li>
+            <li><a href="/">Homepage</a></li>
+            <li><a href="#">Loops</a></li>
+            <li><a href="#">Countdown</a></li>
+            <li><a href="#">Other</a></li>
         </ul>
     </nav>
+
+    <main>
+        <p>Stuff goes here</p>
+    </main>
+
+    <footer>
+        <p>&copy; 202x BenjaminLogan.com</p>
+    </footer>
 </body>
 </html>

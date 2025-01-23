@@ -1,0 +1,27 @@
+/* Website Style */
+
+header{
+    width: 100%;
+    float: left;
+    font-family: Georgia, serif;
+    text-align: center;
+}
+
+nav{
+    width: 20%;
+    float: left;
+}
+
+main{
+    width: 60%;
+    float: left;
+    font-size: large;
+}
+
+footer{
+    width: 100%;
+    float: left;
+    font-size: small;
+    font-weight: bold;
+    text-align: center;
+}
