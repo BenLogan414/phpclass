@@ -29,7 +29,7 @@
     </main>
 
     <footer>
-        <p>&copy; 202x BenjaminLogan.com</p>
+        <p>&copy; <?php echo date("Y"); ?> BenjaminLogan.com</p>
     </footer>
 </body>
 </html>

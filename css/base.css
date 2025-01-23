@@ -20,6 +20,37 @@ main{
     min-height: 400px;
 }
 
+main img{
+    width: 250px;
+    display: block;
+    margin: 0 auto;
+}
+
+main p{
+    margin-top: 30px;
+    text-indent: 25px;
+}
+
+ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1f1;
+}
+
+ul a{
+    display: block;
+    color: black;
+    padding: 8px 0 8px 16px;
+    text-decoration: none;
+}
+
+li a:hover{
+    background-color: #55555555;
+    color: #f1f1f1;
+}
+
 footer{
     width: 100%;
     float: left;
