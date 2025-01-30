@@ -1,0 +1,1 @@
+<p>&copy; <?php echo date("Y"); ?> BenjaminLogan.com</p>

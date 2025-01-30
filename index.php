@@ -10,16 +10,11 @@
 </head>
 <body>
     <header>
-        <h1>PHP Class - Benjamin's Website</h1>
+        <?php include "includes/header.php"; ?>
     </header>
 
     <nav>
-        <ul>
-            <li><a href="/">Homepage</a></li>
-            <li><a href="#">Loops</a></li>
-            <li><a href="#">Countdown</a></li>
-            <li><a href="#">Other</a></li>
-        </ul>
+        <?php include "includes/nav.php"; ?>
     </nav>
 
     <main>
@@ -29,7 +24,7 @@
     </main>
 
     <footer>
-        <p>&copy; <?php echo date("Y"); ?> BenjaminLogan.com</p>
+        <?php include "includes/footer.php"; ?>
     </footer>
 </body>
 </html>
