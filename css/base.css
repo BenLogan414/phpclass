@@ -68,3 +68,13 @@ footer {
     font-weight: bold;
     text-align: center;
 }
+
+.dice img {
+    width: 100px;
+    height: 100px;
+}
+
+.dice {
+    display: inline-flex;
+    margin: 10px;
+}
