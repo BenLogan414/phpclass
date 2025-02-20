@@ -12,6 +12,9 @@
             table-layout: fixed;
             width: 90%;
         }
+        table{
+            margin-bottom: 50px;
+        }
     </style>
     <link rel="stylesheet" type="text/css" href="/css/base.css">
 </head>
@@ -62,6 +65,7 @@
 
             ?>
         </table>
+        <a href="movieadd.php">Add New Movie</a>
     </main>
 
     <footer>
