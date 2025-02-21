@@ -12,23 +12,33 @@ if(!empty($_POST["txtFirstName"]))
         $txtPhone = $_POST["txtPhone"];
         $txtEmail = $_POST["txtEmail"];
         $txtPassword = $_POST["txtPassword"];
+        $txtConfirm = $_POST["txtConfirm"];
+        $error = "";
 
-        try
+        if($txtPassword === $txtConfirm)
         {
-            include "../includes/db.php";
+            try
+            {
+                include "../includes/db.php";
 
-            $sql = mysqli_prepare($con, "insert into customer 
-            (FirstName, LastName, Address, City, State, Zip, Phone, Email, Password) values (?,?,?,?,?,?,?,?,?)");
-            mysqli_stmt_bind_param($sql, "sssssssss", $txtFirstName, $txtLastName, $txtAddress,
-            $txtCity, $txtState, $txtZip, $txtPhone, $txtEmail, $txtPassword);
-            mysqli_stmt_execute($sql);
+                $sql = mysqli_prepare($con, "insert into customer 
+                (FirstName, LastName, Address, City, State, Zip, Phone, Email, Password) values (?,?,?,?,?,?,?,?,?)");
+                mysqli_stmt_bind_param($sql, "sssssssss", $txtFirstName, $txtLastName, $txtAddress,
+                    $txtCity, $txtState, $txtZip, $txtPhone, $txtEmail, $txtPassword);
+                mysqli_stmt_execute($sql);
 
-            header("Location:index.php");
+                header("Location:index.php");
+            }
+            catch (mysqli_sql_exception $ex)
+            {
+                echo $ex;
+            }
         }
-        catch (mysqli_sql_exception $ex)
+        else
         {
-            echo $ex;
+            $error = "Passwords do not match.";
         }
+
     }
 }
 
@@ -45,7 +55,7 @@ if(!empty($_POST["txtFirstName"]))
     <link rel="stylesheet" type="text/css" href="/css/base.css">
     <style>
         label{
-            display: block;
+            display: inline-block;
             margin-top: 6px;
         }
         input{
@@ -68,31 +78,44 @@ if(!empty($_POST["txtFirstName"]))
     <main>
         <form method="post">
             <label for="FirstName">First Name:</label>
-            <input type="text" name="txtFirstName" id="txtFirstName" required>
+            <input type="text" name="txtFirstName" id="txtFirstName" value="<?php echo $txtFirstName ?>" required>
+            <br>
 
             <label for="LastName">Last Name:</label>
-            <input type="text" name="txtLastName" id="txtLastName" required>
+            <input type="text" name="txtLastName" id="txtLastName" value="<?php echo $txtLastName ?>" required>
+            <br>
 
             <label for="Address">Address:</label>
-            <input type="text" name="txtAddress" id="txtAddress" required>
+            <input type="text" name="txtAddress" id="txtAddress" value="<?php echo $txtAddress?>" required>
+            <br>
 
             <label for="City">City:</label>
-            <input type="text" name="txtCity" id="txtCity" required>
+            <input type="text" name="txtCity" id="txtCity" value="<?php echo $txtCity ?>" required>
+            <br>
 
             <label for="State">State:</label>
-            <input type="text" name="txtState" id="txtState" maxlength="2" required>
+            <input type="text" name="txtState" id="txtState" maxlength="2" value="<?php echo $txtState ?>" required>
+            <br>
 
             <label for="Zip">ZIP:</label>
-            <input type="text" name="txtZip" id="txtZip" required>
+            <input type="text" name="txtZip" id="txtZip" value="<?php echo $txtZip?>" required>
+            <br>
 
             <label for="Phone">Phone:</label>
-            <input type="tel" name="txtPhone" id="txtPhone" required>
+            <input type="tel" name="txtPhone" id="txtPhone" value="<?php echo $txtPhone ?>" required>
+            <br>
 
             <label for="Email">Email:</label>
-            <input type="text" name="txtEmail" id="txtEmail" required>
+            <input type="text" name="txtEmail" id="txtEmail" value="<?php echo $txtEmail ?>" required>
+            <br>
 
             <label for="Password">Password:</label>
             <input type="password" name="txtPassword" id="txtPassword" minlength="6" maxlength="16" required>
+            <br>
+
+            <label for="Confirm">Confirm Password:</label>
+            <input type="password" name="txtConfirm" id="txtConfirm" minlength="6" maxlength="16" required>
+            <br>
 
             <br><br>
 
@@ -100,6 +123,14 @@ if(!empty($_POST["txtFirstName"]))
 
             <br><br>
         </form>
+
+        <?php
+            if($error)
+            {
+                echo "<p style='color: crimson'>$error</p>";
+            }
+        ?>
+
     </main>
 
     <footer>
