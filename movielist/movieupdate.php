@@ -56,7 +56,10 @@ else
     <title>Update Movie</title>
     <script type="text/javascript">
         function DeleteMovie(title, id){
-            alert("Are you sure you want to DELETE " + title + " ID=" + id);
+            if(confirm("Are you sure you want to DELETE " + title + "?"))
+            {
+                document.location.href = 'moviedelete.php?id=' + id;
+            }
         }
     </script>
 
