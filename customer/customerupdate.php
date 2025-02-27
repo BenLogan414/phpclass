@@ -66,6 +66,14 @@ else
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Update Customer</title>
+    <script type="text/javascript">
+        function DeleteCustomer(firstname, lastname, id){
+            if(confirm("Are you sure you want to delete " + firstname + " " + lastname + "?"))
+            {
+                document.location.href = 'customerdelete.php?id=' + id;
+            }
+        }
+    </script>
     <link rel="stylesheet" type="text/css" href="/css/base.css">
     <style>
         label {
@@ -131,7 +139,9 @@ else
 
         <br><br>
 
-        <button type="submit">Update Customer</button>
+        <input type="submit" value="Update Customer"/>
+        <input type="submit" value="Delete Customer" onclick="DeleteCustomer('<?=$txtFirstName?>',
+                '<?=$txtLastName?>', '<?=$id?>')">
 
         <br><br>
         <input type="hidden" name="txtCustomerID" value="<?=$id?>"/>
