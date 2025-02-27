@@ -66,9 +66,9 @@
                     $password = $row['Password'];
 
                     echo "<tr>";
-                    echo "<td>$customerID</td>";
-                    echo "<td>$firstName</td>";
-                    echo "<td>$lastName</td>";
+                    echo "<td><a href='customerupdate.php?id=$customerID'>$customerID</a></td>";
+                    echo "<td><a href='customerupdate.php?id=$customerID'>$firstName</a></td>";
+                    echo "<td><a href='customerupdate.php?id=$customerID'>$lastName</a></td>";
                     echo "<td>$address</td>";
                     echo "<td>$city</td>";
                     echo "<td>$state</td>";
