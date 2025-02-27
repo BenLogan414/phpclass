@@ -51,8 +51,8 @@
                     $movieRating = $row['movieRating'];
 
                     echo "<tr>";
-                    echo "<td>$movieID</td>";
-                    echo "<td>$movieTitle</td>";
+                    echo "<td><a href='movieupdate.php?id=$movieID'>$movieID</a></td>";
+                    echo "<td><a href='movieupdate.php?id=$movieID'>$movieTitle</a></td>";
                     echo "<td>$movieRating</td>";
                     echo "</tr>";
                 }
