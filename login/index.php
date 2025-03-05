@@ -1,4 +1,5 @@
 <?php
+    session_start();
 if(!empty($_POST["txtUsername"]))
 {
     if(!empty($_POST["txtPassword"]))
@@ -8,6 +9,7 @@ if(!empty($_POST["txtUsername"]))
 
         if($username=="admin" && $password=="p@ss")
         {
+            $_SESSION["UID"] = 1;
             header("Location: admin.php");
         }
         else

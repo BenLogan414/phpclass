@@ -1,3 +1,79 @@
+<?php
+session_start();
+$err="";
+if(!isset($_SESSION["UID"]))
+{
+    header("Location: index.php");
+}
+
+if(isset($_POST["btnSubmit"]))
+{
+    if(!empty($_POST["txtUsername"]))
+    {
+        $Username = $_POST["txtUsername"];
+    }
+    else
+    {
+        $err="Username is Required!";
+    }
+    if(!empty($_POST["txtPassword"]))
+    {
+        $Password = $_POST["txtPassword"];
+    }
+    else
+    {
+        $err="Password is Required!";
+    }
+    if(!empty($_POST["txtPassword2"]))
+    {
+        $Password2 = $_POST["txtPassword2"];
+    }
+    else
+    {
+        $Password2 = "";
+    }
+    if($Password != $Password2)
+    {
+        $err="Passwords do not match!";
+    }
+    if(!empty($_POST["txtRole"]))
+    {
+        $Role = $_POST["txtRole"];
+    }
+    else
+    {
+        $err="Role is Required!";
+    }
+    if(!empty($_POST["txtEmail"]))
+    {
+        $Email = $_POST["txtEmail"];
+    }
+    else
+    {
+        $err="Email is Required!";
+    }
+
+    if($err=="")
+    {
+        $memberKey = "xxxxxxxxx";
+        include "../includes/db.php";
+
+        $sql = mysqli_prepare($con, "insert into memberLogin (memberName, memberEmail, memberPassword, roleID, memberKey) values (?,?,?,?,?)");
+        mysqli_stmt_bind_param($sql, "sssis", $Username, $Email, $Password, $Role, $memberKey);
+        mysqli_stmt_execute($sql);
+
+        $Username = "";
+        $Password = "";
+        $Password2 = "";
+        $Email = "";
+        $err="Member Added to Database";
+    }
+
+}
+
+
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -60,17 +136,17 @@
     <main>
         <h3>Admin Page</h3>
 
-        <h3 id="err"><?=$msg?></h3>
+        <h3 id="err"><?=$err?></h3>
 
-        <form method="get">
+        <form method="post">
             <div class="gc">
                 <div class="item1"><h3>Add New Member</h3></div>
                 <div class="item2">Username</div>
-                <div class="item3"><input type="text" name="txtUsername" id="txtUsername" size="60" /></div>
+                <div class="item3"><input type="text" name="txtUsername" id="txtUsername" value="<?=$Username?>" size="60" /></div>
                 <div class="item4">Password</div>
-                <div class="item5"><input type="password" name="txtPassword" id="txtPassword" size="60" /></div>
+                <div class="item5"><input type="password" name="txtPassword" id="txtPassword" value="<?=$Password?>" size="60" /></div>
                 <div class="item6">Retype Password</div>
-                <div class="item7"><input type="password" name="txtPassword2" id="txtPassword2" size="60" /></div>
+                <div class="item7"><input type="password" name="txtPassword2" id="txtPassword2" value="<?=$Password2?>" size="60" /></div>
                 <div class="item8">Role</div>
                 <div class="item9">
                     <select name="txtRole" id="txtRole">
@@ -80,7 +156,7 @@
                     </select>
                 </div>
                 <div class="item10">Email</div>
-                <div class="item11"><input type="text" name="txtEmail" id="txtEmail" size="60" /></div>
+                <div class="item11"><input type="text" name="txtEmail" id="txtEmail" value="<?=$Email?>" size="60" /></div>
                 <div class="item12"><input type="submit" value="Create New User" name="btnSubmit"/></div>
             </div>
         </form>
