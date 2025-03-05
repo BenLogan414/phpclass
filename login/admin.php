@@ -11,6 +11,10 @@ if(isset($_POST["btnSubmit"]))
     if(!empty($_POST["txtUsername"]))
     {
         $Username = $_POST["txtUsername"];
+        if(strlen($Username) < 4)
+        {
+            $err="Username must be at least 4 characters long.";
+        }
     }
     else
     {
@@ -19,6 +23,10 @@ if(isset($_POST["btnSubmit"]))
     if(!empty($_POST["txtPassword"]))
     {
         $Password = $_POST["txtPassword"];
+        if(strlen($Password) < 4)
+        {
+            $err="Password must be at least 4 characters long.";
+        }
     }
     else
     {
@@ -47,6 +55,18 @@ if(isset($_POST["btnSubmit"]))
     if(!empty($_POST["txtEmail"]))
     {
         $Email = $_POST["txtEmail"];
+        if(!strpos($Email, '@'))
+        {
+            $err="Email must contain: @";
+        }
+        if(!strpos($Email, '.'))
+        {
+            $err="Email must contain: .";
+        }
+        if(strpos($Email, '@') > strpos($Email, '.'))
+        {
+            $err="Period must come AFTER: @";
+        }
     }
     else
     {
@@ -70,6 +90,8 @@ if(isset($_POST["btnSubmit"]))
     }
 
 }
+
+
 
 
 ?>
@@ -149,11 +171,34 @@ if(isset($_POST["btnSubmit"]))
                 <div class="item7"><input type="password" name="txtPassword2" id="txtPassword2" value="<?=$Password2?>" size="60" /></div>
                 <div class="item8">Role</div>
                 <div class="item9">
-                    <select name="txtRole" id="txtRole">
-                        <option value="1">Admin</option>
-                        <option value="2">Operator</option>
-                        <option value="3">Member</option>
-                    </select>
+<!--                    <select name="txtRole" id="txtRole">-->
+<!--                        <option value="1">Admin</option>-->
+<!--                        <option value="2">Operator</option>-->
+<!--                        <option value="3">Member</option>-->
+<!--                    </select>-->
+                    <?php
+
+                    echo '<select name="txtRole" id="txtRole">';
+
+                    try
+                    {
+                        include "../includes/db.php";
+
+                        $rs = mysqli_query($con, "select roleID, roleValue from role");
+
+                        while($row = mysqli_fetch_array($rs))
+                        {
+                            echo '<option value="' . $row["roleID"] . '">' . $row["roleValue"] . '</option>';
+                        }
+                    }
+                    catch (mysqli_sql_exception $ex)
+                    {
+                        echo $ex;
+                    }
+
+                    echo '</select>';
+
+                    ?>
                 </div>
                 <div class="item10">Email</div>
                 <div class="item11"><input type="text" name="txtEmail" id="txtEmail" value="<?=$Email?>" size="60" /></div>
