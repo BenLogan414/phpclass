@@ -1,4 +1,7 @@
 <?php
+
+$MemberKey = sprintf('%04X%04X%04X%04X%04X%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
+
 if(!empty($_POST["txtFirstName"]))
 {
     if(!empty($_POST["txtLastName"]))
@@ -21,10 +24,12 @@ if(!empty($_POST["txtFirstName"]))
             {
                 include "../includes/db.php";
 
+                $hashedPassword = md5($txtPassword . $MemberKey);
+
                 $sql = mysqli_prepare($con, "insert into customer 
                 (FirstName, LastName, Address, City, State, Zip, Phone, Email, Password) values (?,?,?,?,?,?,?,?,?)");
                 mysqli_stmt_bind_param($sql, "sssssssss", $txtFirstName, $txtLastName, $txtAddress,
-                    $txtCity, $txtState, $txtZip, $txtPhone, $txtEmail, $txtPassword);
+                    $txtCity, $txtState, $txtZip, $txtPhone, $txtEmail, $hashedPassword);
                 mysqli_stmt_execute($sql);
 
                 header("Location:index.php");
