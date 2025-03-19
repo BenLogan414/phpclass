@@ -1,23 +1,47 @@
 <?php
     session_start();
-if(!empty($_POST["txtUsername"]))
+if(!empty($_POST["txtEmail"]))
 {
     if(!empty($_POST["txtPassword"]))
     {
-        $username = $_POST["txtUsername"];
+        $Email = $_POST["txtEmail"];
         $password = $_POST["txtPassword"];
 
-        if($username=="admin" && $password=="p@ss")
+        include "../includes/db.php";
+
+        $sql = mysqli_prepare($con, "select memberPassword, memberKey, roleID, memberID from memberLogin where memberEmail = ?");
+        mysqli_stmt_bind_param($sql, "s", $Email);
+        mysqli_stmt_execute($sql);
+
+        $result = mysqli_stmt_get_result($sql);
+        $row = mysqli_fetch_array($result);
+
+        if($row != null)
         {
-            $_SESSION["UID"] = 1;
-            header("Location: admin.php");
+            $DBPass = $row["memberPassword"];
+            $MemberKey = $row["memberKey"];
+            $password = md5($password . $MemberKey);
+
+            if($password==$DBPass)
+            {
+                $_SESSION["roleID"] = $row["roleID"];
+                $_SESSION["UID"] = $row["memberID"];
+                if($row["roleID"]==1)
+                {
+                    header("Location: admin.php");
+                }
+                else
+                {
+                    header("Location: member.php");
+                }
+            }
+            else
+            {
+                $msg = "Username or Password incorrect.";
+            }
         }
         else
         {
-            if($username=="member" && $password=="p@ss")
-            {
-                header("Location: member.php");
-            }
             $msg = "Username or Password incorrect.";
         }
     }
@@ -32,7 +56,7 @@ if(!empty($_POST["txtUsername"]))
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Add a Movie</title>
+    <title>Login</title>
     <link rel="stylesheet" type="text/css" href="/css/base.css">
     <style>
         .item1 {grid-area: header}
@@ -82,8 +106,8 @@ if(!empty($_POST["txtUsername"]))
         <form method="post">
             <div class="gc">
                 <div class="item1"><h3>User Login</h3></div>
-                <div class="item2">Username</div>
-                <div class="item3"><input type="text" name="txtUsername" id="txtUsername" size="60" /></div>
+                <div class="item2">Email Address</div>
+                <div class="item3"><input type="text" name="txtEmail" id="txtEmail" size="60" /></div>
                 <div class="item4">Password</div>
                 <div class="item5"><input type="password" name="txtPassword" id="txtPassword" size="60" /></div>
                 <div class="item6"><input type="submit" value="Login" /></div>

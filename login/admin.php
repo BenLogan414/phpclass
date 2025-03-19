@@ -1,7 +1,10 @@
 <?php
 session_start();
+
+$MemberKey = sprintf('%04X%04X%04X%04X%04X%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
+
 $err="";
-if(!isset($_SESSION["UID"]))
+if($_SESSION["roleID"]!=1)
 {
     header("Location: index.php");
 }
@@ -59,10 +62,6 @@ if(isset($_POST["btnSubmit"]))
         {
             $err="Email must contain: @";
         }
-        if(!strpos($Email, '.'))
-        {
-            $err="Email must contain: .";
-        }
         if(strpos($Email, '@') > strpos($Email, '.'))
         {
             $err="Period must come AFTER: @";
@@ -75,11 +74,13 @@ if(isset($_POST["btnSubmit"]))
 
     if($err=="")
     {
-        $memberKey = "xxxxxxxxx";
+
         include "../includes/db.php";
 
+        $hashedPWD = md5($Password . $MemberKey);
+
         $sql = mysqli_prepare($con, "insert into memberLogin (memberName, memberEmail, memberPassword, roleID, memberKey) values (?,?,?,?,?)");
-        mysqli_stmt_bind_param($sql, "sssis", $Username, $Email, $Password, $Role, $memberKey);
+        mysqli_stmt_bind_param($sql, "sssis", $Username, $Email, $hashedPWD, $Role, $MemberKey);
         mysqli_stmt_execute($sql);
 
         $Username = "";
