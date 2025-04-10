@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\Member;
+
 class Home extends BaseController
 {
     public function index(): string
@@ -26,15 +28,20 @@ class Home extends BaseController
         else
         {
             // Connect to the database, validate username and password
+            $Member = new Member();
 
-
-            // Pass
-
-
-            // Fail
-            $data = array('load_error'=>'true', 'error_message'=>'Invalid Username or Password');
-            helper('form');
-            return view('homepage', $data);
+            if($Member->user_login($this->request->getPost('username'), $this->request->getPost('password')))
+            {
+                // Pass
+                return view('admin_page');
+            }
+            else
+            {
+                // Fail
+                $data = array('load_error'=>'true', 'error_message'=>'Invalid Username or Password');
+                helper('form');
+                return view('homepage', $data);
+            }
         }
     }
 
