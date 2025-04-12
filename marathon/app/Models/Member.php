@@ -27,4 +27,17 @@ class Member extends Model
             return false;
         }
     }
+
+    public function user_create($username, $password, $email)
+    {
+        $db = db_connect();
+        $MemberKey = sprintf('%04X%04X%04X%04X%04X%04X%04X%04X', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
+        $hashedPWD = md5($password . $MemberKey);
+        $roleID = 2;
+
+        $sql = "insert into memberLogin (memberName, memberEmail, memberPassword, memberKey, roleID) values (?, ?, ?, ?, ?)";
+        $query = $db->query($sql, [$username, $email, $hashedPWD, $MemberKey, $roleID]);
+
+        return (bool)$query;
+    }
 }

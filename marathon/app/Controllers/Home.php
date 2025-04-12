@@ -47,7 +47,40 @@ class Home extends BaseController
 
     public function create(): string
     {
-        echo "Create";
-        exit();
+        $rules=[
+            'username'=>'required|is_unique[memberLogin.memberName]',
+            'password'=>'required',
+            'retype'=>'required|matches[password]',
+            'email'=>'required|valid_email|is_unique[memberLogin.memberEmail]'
+        ];
+
+        if(!$this->validate($rules))
+        {
+            $data = array('load_error'=>'true');
+            helper('form');
+            return view('homepage', $data);
+        }
+        else
+        {
+            // Connect to the database, validate username, password and email
+            $Member = new Member();
+
+            if($Member->user_create(
+                $this->request->getPost('username'),
+                $this->request->getPost('password'),
+                $this->request->getPost('email')
+            ))
+            {
+                // Pass
+                return view('admin_page');
+            }
+            else
+            {
+                // Fail
+                $data = array('load_error'=>'true', 'error_message'=>'Failed to create user.');
+                helper('form');
+                return view('homepage', $data);
+            }
+        }
     }
 }
