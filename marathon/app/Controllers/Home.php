@@ -33,7 +33,8 @@ class Home extends BaseController
             if($Member->user_login($this->request->getPost('username'), $this->request->getPost('password')))
             {
                 // Pass
-                return view('admin_page');
+                header("Location: admin");
+                exit();
             }
             else
             {
