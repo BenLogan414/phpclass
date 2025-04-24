@@ -68,12 +68,29 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>Joe's Haunted 5K</td>
-                                <td>Appleton, WI</td>
-                                <td>October 31st</td>
-                                <td>Edit | Delete</td>
-                            </tr>
+
+                            <?php
+
+                                foreach ($races as $race)
+                                {
+                                    $name = $race['raceName'];
+                                    $location = $race['raceLocation'];
+                                    $date = $race['raceDateTime'];
+                                    $id = $race['raceID'];
+
+                                    $t = strtotime($date);
+                                    $date = date('m/d/Y H:i', $t);
+
+                                    echo"<tr>
+                                            <td>$name</td>
+                                            <td>$location</td>
+                                            <td>$date</td>
+                                            <td><a href='/marathon/public/update_race/$id'>Edit</a> | <a href='/marathon/public/delete_race/$id'>Delete</a></td>
+                                        </tr>";
+                                }
+
+                            ?>
+
                             </tbody>
                         </table>
                     </div>
