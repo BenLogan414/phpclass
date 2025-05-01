@@ -6,6 +6,32 @@ use CodeIgniter\Model;
 
 class Member extends Model
 {
+    public function has_access($raceID, $memberKey)
+    {
+        try
+        {
+            $db = db_connect();
+            $sql = "select ML.memberName, ML.memberEmail, ML.memberID, MR.roleID from member_race MR
+                    inner join memberLogin ML on MR.memberID = ML.memberID
+                    where ML.memberKey = ?
+                    and MR.raceID = ?
+                    and MR.roleID = '2';";
+            $query = $db->query($sql, [$memberKey, $raceID]);
+            $row = $query->getFirstRow();
+
+            if($row==null){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+        catch (Exception $ex)
+        {
+            return false;
+        }
+    }
+
     public function user_login($email, $password)
     {
         $db = db_connect();
@@ -30,6 +56,38 @@ class Member extends Model
                 return false;
             }
         } else {
+            return false;
+        }
+    }
+
+    public function add_user($memberID, $raceID)
+    {
+        try
+        {
+            $db = db_connect();
+            $sql = "insert into member_race (memberID, raceID, roleID) values (?, ?, '3')";
+            $db->query($sql, [$memberID, $raceID]);
+
+            return true;
+        }
+        catch (Exception $ex)
+        {
+            return false;
+        }
+    }
+
+    public function delete_user($memberID, $raceID)
+    {
+        try
+        {
+            $db = db_connect();
+            $sql = "delete from member_race where memberID = ? and raceID = ? and roleID = '3'";
+            $db->query($sql, [$memberID, $raceID]);
+
+            return true;
+        }
+        catch (Exception $ex)
+        {
             return false;
         }
     }
