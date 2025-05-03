@@ -22,6 +22,11 @@ class Race extends Model
 
     public function get_races($memberKey)
     {
+        $this->session = service('session');
+        $this->session->start();
+
+        $memberKey = $this->session->get("memberKey");
+
         $db = db_connect();
         //$sql = "Select * from race";
         $sql = "select R.raceID, raceName, raceLocation, raceDescription, raceDateTime from race R inner join member_race MR on R.raceID = MR.raceID inner join memberLogin ML on MR.memberID = ML.memberID where ML.memberKey = '$memberKey' and MR.roleID = '2';";

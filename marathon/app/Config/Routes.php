@@ -35,3 +35,6 @@ $routes->get('/api/get_runners/(:any)/(:any)', 'Api::get_runners/$1/$2');
 $routes->post('/api/runner', 'Api::add_runner');
 //$routes->put('/api/runner', 'Api::update_runner');
 $routes->delete('/api/runner', 'Api::delete_runner');
+
+// Logout
+$routes->get('/logout', 'Admin::logout');

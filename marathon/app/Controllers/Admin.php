@@ -78,4 +78,14 @@ class Admin extends BaseController
         header("Refresh:0; url=/marathon/public/marathon");
         exit();
     }
+
+    // Logout
+    public function logout()
+    {
+        $this->session = service('session');
+        $this->session->destroy();
+
+        header("Refresh:0; url=/marathon/public/");
+        exit();
+    }
 }
